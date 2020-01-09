@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/kmkwon94/ainized-peframe/issues"
   },
-  "homepage": "https://github.com/kmkwon94/ainized-peframe#readme"
+  "homepage": "https://github.com/kmkwon94/ainized-peframe#readme",
+  "dependencies": {
+    "busboy": "^0.3.1",
+    "express": "^4.17.1",
+    "python-shell": "^1.0.8"
+  }
 }

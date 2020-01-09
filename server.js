@@ -6,7 +6,7 @@ var http = require("http"),
 const { PythonShell } = require("python-shell");
 
 var app = express();
-var repo_dir = "/peframe/peframe";
+var repo_dir = "/ainized-peframe/peframe";
 
 var fullUrl = "";
 

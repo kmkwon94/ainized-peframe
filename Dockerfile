@@ -18,6 +18,7 @@ COPY package.json ./
 RUN npm install
 
 WORKDIR /ainized-peframe
+COPY server.js /workspace
 RUN ["chmod","+x", "install.sh"]
 RUN ["bash", "install.sh"]
 RUN ["python3", "setup.py", "install"]
