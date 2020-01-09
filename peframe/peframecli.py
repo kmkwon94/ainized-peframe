@@ -12,7 +12,7 @@ from argparse import RawTextHelpFormatter
 
 portable = False
 for path in sys.path:
-	if os.sep+'peframe'+os.sep+'peframe' in path:
+	if os.sep+'ainized-peframe'+os.sep+'peframe' in path:
 		portable = True
 if portable:
 	import peframe
