@@ -47,7 +47,7 @@ app.post("/fileupload", function(req, res) {
 
     fn = filename;
     console.log(fieldname, filename);
-    file.pipe(fs.createWriteStream("uploads/" + filename));
+    file.pipe(fs.createWriteStream("/ainized-peframe/uploads/" + filename));
   });
 
   busboy.on("finish", async function() {
