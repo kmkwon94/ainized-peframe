@@ -268,7 +268,7 @@ def get_info():
 
 	if result['yara_plugins']:
 		cmd_list.append('yara_plugins')
-
+	return 
 parser = argparse.ArgumentParser(
 	prog='peframe',
 	description='Tool for static malware analysis.',
