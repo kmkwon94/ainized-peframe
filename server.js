@@ -6,7 +6,7 @@ var http = require("http"),
 const { PythonShell } = require("python-shell");
 
 var app = express();
-var repo_dir = "/Users/comcom1/ainized-peframe/peframe";
+var repo_dir = "/ainized-peframe/peframe";
 
 var fullUrl = "";
 
@@ -58,7 +58,7 @@ app.post("/fileupload", function(req, res) {
       return;
     }
 
-    const i = await runPython("uploads/" + fn);
+    const i = await runPython("/ainized-peframe/uploads/" + fn);
     res.redirect(307, fullUrl + "readfile");
   });
 

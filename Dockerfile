@@ -22,7 +22,7 @@ COPY server.js /workspace
 RUN ["chmod","+x", "install.sh"]
 RUN ["bash", "install.sh"]
 RUN ["python3", "setup.py", "install"]
-WORKDIR peframe
+WORKDIR /workspace
 EXPOSE 80
-#CMD ["python3", "peframecli.py", "/file_example_XLS_1000.xls", "-i"]
+CMD ["node", "server.js"]
 
