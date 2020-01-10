@@ -24,5 +24,6 @@ RUN ["bash", "install.sh"]
 RUN ["python3", "setup.py", "install"]
 WORKDIR /workspace
 EXPOSE 80
-CMD ["node", "server.js"]
+RUN ["npm", "install", "-g", "supervisor"]
+CMD ["supervisor", "server.js"]
 
