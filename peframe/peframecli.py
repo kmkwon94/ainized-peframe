@@ -179,16 +179,21 @@ def show_config():
 
 def get_info():
 	
-	header('File Information (time: ' + str(result['time']) + ')')
+	#header('File Information (time: ' + str(result['time']) + ')')
 	print ("filename".ljust(align, ' '), os.path.basename(result['filename']))
+	print("1")
 	print ("filetype".ljust(align, ' '), result['filetype'][0:63])
+	print("2")
 	print ("filesize".ljust(align, ' '), result['filesize'])
+	print("3")
 	print ("hash sha256".ljust(align, ' '), result['hashes']['sha256'])
+	print("4")
 	cmd_list.append('hashes')
-
+	print("5")
+	
 	print ("virustotal".ljust(align, ' '), str(result['virustotal']['positives']) +'/'+ str(result['virustotal']['total']))
 	cmd_list_select.update({"virustotal": ['permalink', 'antivirus', 'scan_date']})
-
+	print("6")
 	# peinfo
 	if result['peinfo']:
 		if hex(result['peinfo']['imagebase']) == '0x400000':
@@ -270,8 +275,6 @@ def get_info():
 	if result['yara_plugins']:
 		cmd_list.append('yara_plugins')
 
-	for val in result.values():
-		return val
 	
 parser = argparse.ArgumentParser(
 	prog='peframe',
