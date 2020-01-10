@@ -9,6 +9,7 @@ import json
 import readline
 import argparse
 from argparse import RawTextHelpFormatter
+from pprint import pprint as pp
 
 portable = False
 for path in sys.path:
@@ -178,6 +179,8 @@ def show_config():
 	return message
 
 def get_info():
+	pp(result)
+	return
 	header('File Information (time: ' + str(result['time']) + ')')
 	print ("filename".ljust(align, ' '), os.path.basename(result['filename']))
 	print ("filetype".ljust(align, ' '), result['filetype'][0:63])
@@ -268,7 +271,7 @@ def get_info():
 
 	if result['yara_plugins']:
 		cmd_list.append('yara_plugins')
-	return 
+	
 parser = argparse.ArgumentParser(
 	prog='peframe',
 	description='Tool for static malware analysis.',
