@@ -86,6 +86,7 @@ runPython = filename => {
         console.log("Now the result will be appeared");
         console.log(filename);
         const inputdir = await result[result.length - 1];
+        console.log(inputdir);
         resolve(inputdir);
       }
     );
