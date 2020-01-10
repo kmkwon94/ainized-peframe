@@ -6,7 +6,7 @@ var http = require("http"),
 const { PythonShell } = require("python-shell");
 
 var app = express();
-var repo_dir = "/ainized-peframe/peframe";
+var repo_dir = "/Users/comcom1/ainized-peframe/peframe";
 
 var fullUrl = "";
 
@@ -25,29 +25,32 @@ app.get("/", function(req, res) {
   return res.end();
 });
 
-app.post("/readfile", async (req, res) => {
-  console.log(input);
-  const { i, o } = await runPython(input);
-  console.log(i, o);
+app.post("/", async (req, res) => {
+  console.log("input");
+  console.log(i);
   console.log("start readfile");
   res.writeHead(200, { "Content-Type": "text/html" });
   res.write("<html><body>");
 });
 
+app.post("/readfile", function(req, res) {});
+
 app.post("/fileupload", function(req, res) {
   var fileuploaded = true;
   var busboy = new Busboy({ headers: req.headers });
+  let fn = "";
   busboy.on("file", function(fieldname, file, filename, encoding, mimetype) {
     if (filename === "") {
       fileuploaded = false;
       console.log("here");
     }
 
+    fn = filename;
     console.log(fieldname, filename);
-    file.pipe(fs.createWriteStream(input));
+    file.pipe(fs.createWriteStream("uploads/" + filename));
   });
 
-  busboy.on("finish", function() {
+  busboy.on("finish", async function() {
     console.log("Upload complete");
     if (!fileuploaded) {
       res.writeHead(400);
@@ -55,6 +58,7 @@ app.post("/fileupload", function(req, res) {
       return;
     }
 
+    const i = await runPython("uploads/" + fn);
     res.redirect(307, fullUrl + "readfile");
   });
 
@@ -66,11 +70,11 @@ app.listen(80, () => {
   console.log("server connect");
 });
 
-runPython = input => {
+runPython = filename => {
   return new Promise((resolve, reject) => {
     PythonShell.run(
-      repo_dir + "peframecli.py",
-      { args: [input] },
+      repo_dir + "/peframecli.py",
+      { args: [filename] },
       async (err, result) => {
         if (err) {
           if (err.traceback === undefined) {
@@ -79,7 +83,7 @@ runPython = input => {
             console.log(err.traceback);
           }
         }
-        console.log(input);
+        console.log(filename);
         const inputdir = await result[result.length - 1];
         resolve(inputdir);
       }

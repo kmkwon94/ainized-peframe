@@ -178,6 +178,8 @@ def show_config():
 	return message
 
 def get_info():
+	print(result)
+	return
 	header('File Information (time: ' + str(result['time']) + ')')
 	print ("filename".ljust(align, ' '), os.path.basename(result['filename']))
 	print ("filetype".ljust(align, ' '), result['filetype'][0:63])
