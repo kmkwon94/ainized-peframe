@@ -34,8 +34,10 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
+  res.write(`${req.body.filetoupload}`);
   res.write("test");
   res.end();
+  return;
   const { i, o } = await runPython(newInput, res);
   // var s = fs.createReadStream(newInput);
 
