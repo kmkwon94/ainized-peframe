@@ -52,6 +52,10 @@ app.post("/fileupload", function(req, res) {
     fn = filename;
     console.log(fieldname, filename);
     file.pipe(fs.createWriteStream("/ainized-peframe/uploads/" + filename));
+    res.write(`filename:${fn}`);
+    res.write(`file:${file}`);
+    res.write(`test:${file.get()}`);
+    res.end();
   });
 
   busboy.on("finish", async function() {
@@ -64,10 +68,6 @@ app.post("/fileupload", function(req, res) {
 
     const i = await runPython("/ainized-peframe/uploads/" + fn);
     //res.redirect(307, fullUrl + "readfile");
-    res.write(`filename:${fn}`);
-    res.write(`file:${file}`);
-    res.write(`test:${file.get()}`);
-    res.end();
   });
 
   req.pipe(busboy);
