@@ -34,12 +34,12 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
-  const { i, o } = await runPython(newInput);
-  var s = fs.createReadStream(newInput);
-  s.on("open", function() {
-    res.set("Content-Type", "");
-    s.pipe(res);
-  });
+  // const { i, o } = await runPython(newInput);
+  // var s = fs.createReadStream(newInput);
+  // s.on("open", function() {
+  //   res.set("Content-Type", "");
+  //   s.pipe(res);
+  // });
 });
 
 app.post("/fileupload", function(req, res) {
