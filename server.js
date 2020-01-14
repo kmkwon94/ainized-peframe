@@ -34,7 +34,7 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
-  res.write(req);
+  //res.write(req);
   // res.write("hello");
   // res.end();
 });
@@ -64,6 +64,7 @@ app.post("/fileupload", function(req, res) {
 
     const i = await runPython("/ainized-peframe/uploads/" + fn);
     res.redirect(307, fullUrl + "readfile");
+    res.end();
   });
 
   req.pipe(busboy);
