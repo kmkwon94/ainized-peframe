@@ -34,6 +34,14 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
+  const { i, o } = await runPython(newInput, res);
+  // var s = fs.createReadStream(newInput);
+
+  // s.on("open", function() {
+  //   //res.set("Content-Type", "");
+
+  //   s.pipe(res);
+  // });
   // const { i, o } = await runPython(newInput);
   // var s = fs.createReadStream(newInput);
   // s.on("open", function() {
@@ -77,7 +85,7 @@ app.listen(80, () => {
   console.log("server connect");
 });
 
-runPython = filename => {
+runPython = (filename, res) => {
   return new Promise((resolve, reject) => {
     PythonShell.run(
       repo_dir + "/peframecli.py",
@@ -94,6 +102,8 @@ runPython = filename => {
         console.log(filename);
         const inputdir = await result; // [result.length - 1];
         console.log(inputdir);
+        res.write(`result:${result}`);
+        res.end();
         resolve(inputdir);
       }
     );
