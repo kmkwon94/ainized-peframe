@@ -54,7 +54,6 @@ app.post("/fileupload", function(req, res) {
     file.pipe(fs.createWriteStream("/ainized-peframe/uploads/" + filename));
     res.write(`filename:${fn}`);
     res.write(`file:${file}`);
-    res.write(`test:${file.get()}`);
     res.end();
   });
 
