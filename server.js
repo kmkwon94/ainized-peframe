@@ -96,6 +96,7 @@ runPython = (filename, res) => {
         console.log(filename);
         const inputdir = await result; // [result.length - 1];
         console.log(inputdir);
+        res.writeHead(200, { "Content-Type": "application/json" });
         res.write(inputdir);
         res.end();
         resolve(inputdir);
