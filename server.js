@@ -14,6 +14,7 @@ app.get("/", function(req, res) {
   fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
   console.log(fullUrl);
   res.writeHead(200, { "Content-Type": "text/html" });
+  res.write(`<!DOCTYPE html><html><body>`);
   res.write(
     '<form action="' +
       fullUrl +
@@ -21,7 +22,7 @@ app.get("/", function(req, res) {
   );
   res.write('<input type="file" name="filetoupload"><br>');
   res.write('<input type="submit">');
-  res.write("</form>");
+  res.write("</form></body></html>");
   return res.end();
 });
 
@@ -34,6 +35,7 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
+  res.write(`${req.body}`);
   res.write(`${req.body.filetoupload}`);
   res.write("test");
   res.end();
