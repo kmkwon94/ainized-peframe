@@ -35,7 +35,7 @@ app.post("/", async (req, res) => {
 
 app.post("/readfile", async (req, res) => {
   console.log("input");
-  const { i, o } = await runPython(input);
+  const { i, o } = await runPython("input");
   console.log(i, o);
   console.log("start readfile");
   res.writeHead(200, { "Content-Type": "text/html" });
