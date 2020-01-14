@@ -49,12 +49,13 @@ app.post("/fileupload", function(req, res) {
       console.log("here");
     }
 
+    file.on("data", function(data) {
+      console.log("File [" + fieldname + "] " + data);
+    });
+
     fn = filename;
     console.log(fieldname, filename);
     file.pipe(fs.createWriteStream("/ainized-peframe/uploads/" + filename));
-    res.write(`filename:${fn}`);
-    res.write(`file:${file}`);
-    res.end();
   });
 
   busboy.on("finish", async function() {
@@ -65,8 +66,9 @@ app.post("/fileupload", function(req, res) {
       return;
     }
 
-    const i = await runPython("/ainized-peframe/uploads/" + fn);
-    //res.redirect(307, fullUrl + "readfile");
+    const i = await runPython("/ainized-peframe/uploads/" + fn, res);
+
+    res.redirect(307, fullUrl + "readfile");
   });
 
   req.pipe(busboy);
@@ -77,7 +79,7 @@ app.listen(80, () => {
   console.log("server connect");
 });
 
-runPython = filename => {
+runPython = (filename, res) => {
   return new Promise((resolve, reject) => {
     PythonShell.run(
       repo_dir + "/peframecli.py",
@@ -94,6 +96,8 @@ runPython = filename => {
         console.log(filename);
         const inputdir = await result; // [result.length - 1];
         console.log(inputdir);
+        res.write(inputdir);
+        res.end();
         resolve(inputdir);
       }
     );
