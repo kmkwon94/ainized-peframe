@@ -34,7 +34,7 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
-  // res.write(req);
+  res.write(req);
   // res.write("hello");
   // res.end();
 });
