@@ -34,7 +34,8 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
-  const newInput = await runPython(newInput);
+  const [newInput, newOutput] = await busboyFunc(req, res);
+  const { i, o } = await runPython(newInput);
   var s = fs.createReadStream(newInput);
   s.on("open", function() {
     res.set("Content-Type", "");
