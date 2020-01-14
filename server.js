@@ -14,7 +14,6 @@ app.get("/", function(req, res) {
   fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
   console.log(fullUrl);
   res.writeHead(200, { "Content-Type": "text/html" });
-  res.write(`<!DOCTYPE html><html><body>`);
   res.write(
     '<form action="' +
       fullUrl +
@@ -22,7 +21,7 @@ app.get("/", function(req, res) {
   );
   res.write('<input type="file" name="filetoupload"><br>');
   res.write('<input type="submit">');
-  res.write("</form></body></html>");
+  res.write("</form>");
   return res.end();
 });
 
@@ -35,25 +34,10 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/readfile", async (req, res) => {
-  res.write(`${req.body}`);
-  res.write(`${req.body.filetoupload}`);
-  res.write("test");
+  console.log(`headers:${req.headers}`);
+  console.log(`JSON:${JSON.stringify(req.headers)}`);
+  res.write("hello");
   res.end();
-  return;
-  const { i, o } = await runPython(newInput, res);
-  // var s = fs.createReadStream(newInput);
-
-  // s.on("open", function() {
-  //   //res.set("Content-Type", "");
-
-  //   s.pipe(res);
-  // });
-  // const { i, o } = await runPython(newInput);
-  // var s = fs.createReadStream(newInput);
-  // s.on("open", function() {
-  //   res.set("Content-Type", "");
-  //   s.pipe(res);
-  // });
 });
 
 app.post("/fileupload", function(req, res) {
@@ -91,7 +75,7 @@ app.listen(80, () => {
   console.log("server connect");
 });
 
-runPython = (filename, res) => {
+runPython = filename => {
   return new Promise((resolve, reject) => {
     PythonShell.run(
       repo_dir + "/peframecli.py",
@@ -108,8 +92,6 @@ runPython = (filename, res) => {
         console.log(filename);
         const inputdir = await result; // [result.length - 1];
         console.log(inputdir);
-        //res.write(`result:${result}`);
-        //res.end();
         resolve(inputdir);
       }
     );
