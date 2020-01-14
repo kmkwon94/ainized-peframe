@@ -33,7 +33,14 @@ app.post("/", async (req, res) => {
   res.write("<html><body>");
 });
 
-app.post("/readfile", async (req, res) => {});
+app.post("/readfile", async (req, res) => {
+  const newInput = await runPython(newInput);
+  var s = fs.createReadStream(newInput);
+  s.on("open", function() {
+    res.set("Content-Type", "");
+    s.pipe(res);
+  });
+});
 
 app.post("/fileupload", function(req, res) {
   var fileuploaded = true;
