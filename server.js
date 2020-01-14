@@ -33,8 +33,8 @@ app.post("/", async (req, res) => {
   res.write("<html><body>");
 });
 
-app.post("/readfile", function(req, res) {
-  console.log(input);
+app.post("/readfile", async (req, res) => {
+  console.log("input");
   const { i, o } = await runPython(input);
   console.log(i, o);
   console.log("start readfile");
