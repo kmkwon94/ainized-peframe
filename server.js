@@ -4,14 +4,14 @@ var express = require("express"),
 const { PythonShell } = require("python-shell");
 
 function index(req, res) {
-  res.writeHead(200, { "Content-Type": "text/html" }); //?
+  res.writeHead(200, { "Content-Type": "text/html" }); //이 밑에 쓰인 content type을 text/html로 하겠다.
   res.write(
     '<form action="./fileupload" method="post" enctype="multipart/form-data">'
   );
   res.write('<input type="file" name="filetoupload"><br>');
   res.write('<input type="submit">');
   res.write("</form>");
-  return res.end(); //?
+  return res.end(); //응답 프로세스를 종료합니다.
 }
 
 function runPython(filename) {
