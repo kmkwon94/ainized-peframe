@@ -1,45 +1,44 @@
-var http = require("http"),
-  express = require("express"),
+var express = require("express"),
   Busboy = require("busboy"),
-  path = require("path"),
   fs = require("fs");
 const { PythonShell } = require("python-shell");
 
-var app = express();
-var repo_dir = "/ainized-peframe/peframe";
-
-var fullUrl = "";
-
-app.get("/", function(req, res) {
-  fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
-  console.log(fullUrl);
-  res.writeHead(200, { "Content-Type": "text/html" });
+function index(req, res) {
+  res.writeHead(200, { "Content-Type": "text/html" }); //?
   res.write(
-    '<form action="' +
-      fullUrl +
-      'fileupload" method="post" enctype="multipart/form-data">'
+    '<form action="./fileupload" method="post" enctype="multipart/form-data">'
   );
   res.write('<input type="file" name="filetoupload"><br>');
   res.write('<input type="submit">');
   res.write("</form>");
-  return res.end();
-});
+  return res.end(); //?
+}
 
-app.post("/", async (req, res) => {
-  console.log("input");
-  console.log(i);
-  console.log("start readfile");
-  res.writeHead(200, { "Content-Type": "text/html" });
-  res.write("<html><body>");
-});
+function runPython(filename) {
+  return new Promise((resolve, reject) => {
+    PythonShell.run(
+      "/ainized-peframe/peframe/peframecli.py",
+      { args: ["-j", filename] },
+      async (err, result) => {
+        if (err) {
+          if (err.traceback === undefined) {
+            console.log(err.message);
+          } else {
+            console.log(err.traceback);
+          }
+          reject(err);
+        } else {
+          console.log("Now the result will be appeared");
+          console.log(filename);
+          const inputdir = await result; // [result.length - 1];
+          resolve(inputdir);
+        }
+      }
+    );
+  });
+}
 
-app.post("/readfile", async (req, res) => {
-  //res.write(req);
-  // res.write("hello");
-  // res.end();
-});
-
-app.post("/fileupload", function(req, res) {
+function fileupload(req, res) {
   var fileuploaded = true;
   var busboy = new Busboy({ headers: req.headers });
   let fn = "";
@@ -62,38 +61,28 @@ app.post("/fileupload", function(req, res) {
       return;
     }
 
-    const i = await runPython("/ainized-peframe/uploads/" + fn);
-    res.redirect(307, fullUrl + "readfile");
-    res.end();
+    const run_output = await runPython("/ainized-peframe/uploads/" + fn);
+    /*run_output = [
+      // 진짜 Python 프로그램의 stdout이 한줄한줄(String) Array로 들어옴.
+      "{",
+      '    "id": null,',
+      "}"
+    ];*/
+    const json_output = run_output.join("\n"); // 하나의 String으로 합침.
+    const json_values = JSON.parse(json_output); // JSON으로 만듬.
+    //res.writeHead(200, { "Content-Type": "application/json" }); //?
+    //res.write(json_output).end();
+    res.json(json_values).end();
   });
 
   req.pipe(busboy);
   console.log("end fileupload post");
-});
+}
+
+var app = express();
+app.get("/", index);
+app.post("/fileupload", fileupload);
 
 app.listen(80, () => {
   console.log("server connect");
 });
-
-runPython = filename => {
-  return new Promise((resolve, reject) => {
-    PythonShell.run(
-      repo_dir + "/peframecli.py",
-      { args: ["-j", filename] },
-      async (err, result) => {
-        if (err) {
-          if (err.traceback === undefined) {
-            console.log(err.message);
-          } else {
-            console.log(err.traceback);
-          }
-        }
-        console.log("Now the result will be appeared");
-        console.log(filename);
-        const inputdir = await result; // [result.length - 1];
-        console.log(inputdir);
-        resolve(inputdir);
-      }
-    );
-  });
-};
