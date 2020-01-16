@@ -81,7 +81,12 @@ function fileupload(req, res) {
 
 var app = express();
 app.use(cors({ origin: "https://ainize.ai" }));
-app.post("/", index);
+app.get("/", index);
+app.post("/", async function(req, res) {
+  console.log("here");
+  const ret = await busboyFunc(req, res);
+  res.redirect(307, fullUrl + "fileupload");
+});
 app.post("/fileupload", fileupload);
 
 app.listen(80, () => {
