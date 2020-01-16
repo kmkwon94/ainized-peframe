@@ -2,7 +2,7 @@ var express = require("express"),
   Busboy = require("busboy"),
   fs = require("fs");
 const { PythonShell } = require("python-shell");
-
+const cors = require("cors");
 function index(req, res) {
   res.writeHead(200, { "Content-Type": "text/html" }); //이 밑에 쓰인 content type을 text/html로 하겠다.
   res.write(
@@ -80,6 +80,7 @@ function fileupload(req, res) {
 }
 
 var app = express();
+app.use(cors({ origin: "https://ainize.ai" }));
 app.get("/", index);
 app.post("/fileupload", fileupload);
 
