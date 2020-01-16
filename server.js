@@ -81,7 +81,7 @@ function fileupload(req, res) {
 
 var app = express();
 app.use(cors({ origin: "https://ainize.ai" }));
-app.get("/", index);
+app.post("/", index);
 app.post("/fileupload", fileupload);
 
 app.listen(80, () => {
