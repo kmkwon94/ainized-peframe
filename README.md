@@ -16,8 +16,13 @@ I ainized this program, so you don't need to setting environment. You just click
 # How to Run
 
 1. click 'Run on ainize'
+2. click Peframe
+3. upload file that you want to check
+4. The result will be shown as json file.
 
 ## Install
+
+if you want run on you local environment follow the step
 
 **Download**
 

@@ -27,6 +27,7 @@ COPY package.json ./
 COPY requirements.txt ./
 RUN npm install
 RUN ["npm", "install", "-g", "supervisor"]
+RUN ["npm", "install", "-g", "cors"]
 RUN ["python3", "-m", "pip", "install", "-r", "requirements.txt"]
 
 RUN wget https://file-examples.com/wp-content/uploads/2017/02/file_example_XLS_1000.xls \

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/kmkwon94/ainized-peframe#readme",
   "dependencies": {
     "busboy": "^0.3.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "python-shell": "^1.0.8"
   }
